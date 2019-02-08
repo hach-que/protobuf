@@ -1076,8 +1076,17 @@ func (g *Generator) Out() {
 }
 
 // HACK: let me set files
-func (g *Generator) SetFiles(files []*FileDescriptor) {
-	g.genFiles = files
+func (g *Generator) SetFiles(files map[string]*FileDescriptor, importPath string) {
+	var filesArr []*FileDescriptor
+	for _, value := range files {
+		filesArr = append(filesArr, value)
+	}
+	g.genFiles = filesArr
+	g.allFilesByName = files
+	g.allFiles = filesArr
+	for _, f := range g.genFiles {
+		f.importPath = GoImportPath(importPath)
+	}
 }
 
 // GenerateAllFiles generates the output for all the files we're outputting.
