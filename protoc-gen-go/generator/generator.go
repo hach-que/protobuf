@@ -1075,6 +1075,11 @@ func (g *Generator) Out() {
 	}
 }
 
+// HACK: let me set files
+func (g *Generator) SetFiles(files []*FileDescriptor) {
+	g.genFiles = files
+}
+
 // GenerateAllFiles generates the output for all the files we're outputting.
 func (g *Generator) GenerateAllFiles() {
 	// Initialize the plugins
@@ -2264,7 +2269,7 @@ func (g *Generator) generateMessage(message *Descriptor) {
 			of := oneofField{
 				fieldCommon: fieldCommon{
 					goName:     fname,
-					getterName: "Get"+fname,
+					getterName: "Get" + fname,
 					goType:     dname,
 					tags:       tag,
 					protoName:  odp.GetName(),
